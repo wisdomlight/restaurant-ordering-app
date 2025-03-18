@@ -14,17 +14,21 @@ document.addEventListener('click', function(e){
         renderBoughtItemHtml(e.target.dataset.name)
      } else if(e.target.dataset.addItem){
         renderBoughtItemHtml(e.target.dataset.addItem)
-    }
+    } else if(e.target.dataset.id)
     
 })
 
 function boughtItemHtml(nameOfItemBought){
     let itemsHtml = '' ;
-    menuArray.forEach(element =>{
+    menuArray.forEach((element, index) =>{
         if(element.name === nameOfItemBought){
-            itemsHtml += `<div class="item-bought">
-                            <h2 class='name-of-bought'>${nameOfItemBought}   <span class="remove" style="font-size: 10px"> remove</span></h2>
-                            <p class='bought-price'>$${element.price}
+            itemsHtml += `<div class='item-bought ${nameOfItemBought}[${index}]'>
+                            <h2 class='name-of-bought ${nameOfItemBought}[${index}]'>
+                            ${nameOfItemBought}   
+                                <span class="remove ${nameOfItemBought}[${index}]>" 
+                                style="font-size: 10px"> remove</span>
+                            </h2>
+                            <p class='bought-price ${nameOfItemBought}[${index}'>$${element.price}
                         </div>`
             
         }

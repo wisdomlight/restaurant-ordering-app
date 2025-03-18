@@ -14,21 +14,21 @@ document.addEventListener('click', function(e){
         renderBoughtItemHtml(e.target.dataset.name)
      } else if(e.target.dataset.addItem){
         renderBoughtItemHtml(e.target.dataset.addItem)
-    } else if(e.target.dataset.id)
-    
-})
+    }
 
-function boughtItemHtml(nameOfItemBought){
+// YOUR ORDERS SECTION
+// GENERATE HTML DISPLAYING THE NAME PRICE AND REMOVE FOR SELECTED ITEMS
+function selectedItemHtml(nameOfItemSelected){
     let itemsHtml = '' ;
-    menuArray.forEach((element, index) =>{
-        if(element.name === nameOfItemBought){
-            itemsHtml += `<div class='item-bought ${nameOfItemBought}[${index}]'>
-                            <h2 class='name-of-bought ${nameOfItemBought}[${index}]'>
-                            ${nameOfItemBought}   
-                                <span class="remove ${nameOfItemBought}[${index}]>" 
+    menuArray.forEach((element) =>{
+        if(element.name === nameOfItemSelected){
+            itemsHtml += `<div class='item-bought'>
+                            <h2 class='name-of-bought'>
+                            ${nameOfItemSelected}   
+                                <span class="remove" 
                                 style="font-size: 10px"> remove</span>
                             </h2>
-                            <p class='bought-price ${nameOfItemBought}[${index}'>$${element.price}
+                            <p class='bought-price '>$${element.price}
                         </div>`
             
         }
@@ -37,8 +37,9 @@ function boughtItemHtml(nameOfItemBought){
     return itemsHtml
 
 }
-function renderBoughtItemHtml(nameOfItemBought){
-    itemToPay.innerHTML += boughtItemHtml(nameOfItemBought)
+// RENDER HTML OF SELECTED ITEMS
+function renderBoughtItemHtml(nameOfItemSelected){
+    itemToPay.innerHTML += selectedItemHtml(nameOfItemSelected)
 }
 
 function itemsHtml(){
@@ -78,9 +79,9 @@ function render(){
 
 
 render()
-// console.log(itemsHtml())
+// console.log(itemshtml())
 
 
-// NOTES
+// notes
 /* to avoind data-attributes naming  issues - 
-the html can have dashes in it like add-tem but in the javascript it becomes addItem*/
+the html can have dashes in it like add-tem but in the javascript it becomes additem*/
