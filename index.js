@@ -2,6 +2,7 @@ import { menuArray } from './data.js'
 
 const listOfItems = document.getElementById('list-of-items')
 const itemToPay = document.getElementById('item-to-pay')
+const totalEl = document.getElementById('total')
 
 /*adding one event listener to the whole document
     adding a data-* to the + button and possibly to the other divs??
@@ -9,12 +10,24 @@ const itemToPay = document.getElementById('item-to-pay')
    */
 document.addEventListener('click', function(e){
     if (e.target.dataset.emoji){
-        renderBoughtItemHtml(e.target.dataset.emoji)
+        renderSelectedItemHtml(e.target.dataset.emoji)
+        renderSelectedItemsTotal(totalSelectedItemsPrice)
     } else if(e.target.dataset.name){
-        renderBoughtItemHtml(e.target.dataset.name)
+        renderSelectedItemHtml(e.target.dataset.name)
+        renderSelectedItemsTotal(totalSelectedItemsPrice)
      } else if(e.target.dataset.addItem){
-        renderBoughtItemHtml(e.target.dataset.addItem)
+        renderSelectedItemHtml(e.target.dataset.addItem)
+        renderSelectedItemsTotal(totalSelectedItemsPrice)
+    } else if(e.target.classList.contains('remove')){
+        removeItemFromTotal(e.target)
+        renderSelectedItemsTotal(totalSelectedItemsPrice)
+        e.target.parentElement.parentElement.remove()
     }
+}
+)
+
+let totalSelectedItemsPrice = 0;
+// let elementPrice = 0;
 
 // YOUR ORDERS SECTION
 // GENERATE HTML DISPLAYING THE NAME PRICE AND REMOVE FOR SELECTED ITEMS
@@ -28,19 +41,54 @@ function selectedItemHtml(nameOfItemSelected){
                                 <span class="remove" 
                                 style="font-size: 10px"> remove</span>
                             </h2>
-                            <p class='bought-price '>$${element.price}
+                            <p class="bought-price" data-price="${element.price}">$${element.price}
                         </div>`
-            
+            totalSelectedItemsPrice += element.price
+            elementPrice = element.price
+            }
         }
-    }
     )
     return itemsHtml
 
 }
+
+// TOTAL OF SELECTED ITEMS
+function renderSelectedItemsTotal(total){
+        totalEl.innerHTML = `Total is ${total}`
+
+}
+
 // RENDER HTML OF SELECTED ITEMS
-function renderBoughtItemHtml(nameOfItemSelected){
+function renderSelectedItemHtml(nameOfItemSelected){
     itemToPay.innerHTML += selectedItemHtml(nameOfItemSelected)
 }
+
+// REMOVE PRICE OF REMOVED SELECTED ITEM FROM ORDER
+let priceValue;
+function removeItemFromTotal(targetElement){
+    const grandParentElement = targetElement.parentElement.parentElement
+    const secondChild = grandParentElement.children[1]
+    priceValue = secondChild.dataset.price
+
+    totalSelectedItemsPrice -= priceValue
+    priceValue = 0
+    //the function modifying global variables - priceValue and 
+}
+// function removeItemFromTotal(param){
+//     document.querySelectorAll('.remove').forEach(span => {
+//         span.addEventListener('click', function(e) {
+//             if(param){
+//                 const grandParentElement = e.target.parentElement.parentElement
+//                 const secondChild = grandParentElement.children[1]
+//                 const priceText = secondChild.textContent
+//                 priceValue = parseFloat(secondChild.dataset.price)
+//                 totalSelectedItemsPrice -= priceValue
+//                 priceValue = 0
+//             }
+//         })
+//     })
+// }
+
 
 function itemsHtml(){
     let displayItemsHtml = ''
@@ -76,11 +124,7 @@ function render(){
 
 }
 
-
-
 render()
-// console.log(itemshtml())
-
 
 // notes
 /* to avoind data-attributes naming  issues - 

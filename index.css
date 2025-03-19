@@ -113,7 +113,7 @@ header {
 }
 .item-to-pay {
     margin-top: 35px;
-    border: 1px solid blue;
+    /* border: 1px solid blue; */
 }
 .btn{
     /* display: flex; */
